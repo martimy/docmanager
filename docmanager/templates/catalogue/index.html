@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Books in catalogue</h3>
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book_detail' book.id %}">{{book.title|capfirst}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
