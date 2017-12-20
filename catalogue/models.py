@@ -1,8 +1,8 @@
 from django.db import models
 
 class Book(models.Model):
-    path = models.CharField(max_length=200)
-    #path = models.FileField()
+    filepath = models.CharField(max_length=200)
+    filename = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     description = models.TextField()
     category = models.CharField(max_length=50, null=True, blank=True)
