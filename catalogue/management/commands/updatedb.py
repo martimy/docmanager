@@ -29,14 +29,18 @@ class Command(BaseCommand):
                  break
              #path = root.split(os.sep)
              basename = os.path.basename(root)
+             added_count = 0
              for file in files:
-                  args = {'filepath':root, 'filename':file, 'title':file, 'description':'', 'category':None, 'tags':basename, 'seen':timezone.now()}
+                  f, e = os.path.splitext(file)
+                  args = {'filepath':root, 'filename':file, 'title':f, 'description':'None available', 'category':None, 'tags':basename, 'seen':timezone.now()}
                   #self.stdout.write("record is %s" % str(args))
                   #Book.objects.create(**args)
-                  Book.objects.update_or_create(
+                  #Book.objects.update_or_create(
+                  obj, created = Book.objects.get_or_create(
                        filename=file,
                        defaults=args,
                   )
-         self.stdout.write(self.style.SUCCESS('Successfully scanned folder %s.' % DIR))
+                  if created: added_count += 1 
+         self.stdout.write(self.style.SUCCESS('Successfully scanned folder %s and added %d recorfds.' % (DIR, added_count) ))
 
 

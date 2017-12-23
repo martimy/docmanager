@@ -1,8 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <a href="{% url 'index'%}">Back to books list</a>
-    <h3>{{book.title|capfirst}}</h3>
-    <h4>Description</h4>
-    <p>{{ book.description }}</p>
+    <a href="{% url 'list'%}">Back to documents list</a> | 
+	<a href="{% url 'book_update' book.id %}">Update</a>
+	
+	<h1>Document Details</h1>
+
+	<div id='react-container'>some code goes here</div>
+	<script type="text/babel">
+		var FieldValue = React.createClass({
+			getInitialState() {
+				return ({name: this.props.value});
+			},
+			
+			handleChange(event) {
+				this.setState({ name: event.target.value });
+			},
+			
+			render() {
+				var valueStyle = { color: 'blue', fontSize: '18px'};
+				return <input type="text"
+					value = {this.state.name}
+					onChange = {this.handleChange} />
+			}
+			});
+
+		var BookInfo = React.createClass({
+			handleSubmit(event) {
+				console.log(event);
+				event.preventDefault();
+				console.log("Form submitted");
+			},
+		
+			render() {
+				return <form  onSubmit={this.handleSubmit}>
+					<p>Title: <FieldValue value = {this.props.title}/></p>
+					<p>Category: <FieldValue value = {this.props.category}/></p>
+					<p>Tags: <FieldValue value = {this.props.tags}/></p>
+					<p>Description:</p>
+					<FieldValue value = {this.props.desc}/>
+					<section><button>Submit</button></section>
+				</form>
+			}
+		});
+
+		var fields = {title:"{{book.title}}", category:"{{book.category}}", tags:"{{book.tags}}", desc:"{{book.description}}"}
+		
+		ReactDOM.render(
+			<BookInfo {...fields} />,
+			document.getElementById('react-container'))
+	</script>
+
 {% endblock %}

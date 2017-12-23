@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3>Books in catalogue</h3>
+<h3>Main Menu</h3>
     <ul>
-        {% for book in books %}
-            <li>
-                <a href="{% url 'book_detail' book.id %}">{{book.id}}</a> | {{book.title|capfirst}} | {{book.filename}}
-            </li>
-        {% endfor %}
+        <li><a href="{% url 'list' %}">Documents List</a></li>
+        <li>Option 2</li>
+        <li>Option 3</li>
     </ul>
+There are {{ count }} documents in the catalogue.
+
 {% endblock %}
